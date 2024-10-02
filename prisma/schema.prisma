@@ -1,0 +1,1633 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// generator docs {
+//   provider = "node node_modules/prisma-docs-generator"
+//   // output = "./docs"
+//   // includeRelationFields = false
+// }
+// generator class_validator {
+//   provider = "prisma-class-validator-generator"
+//   output   = "./generated-models"
+// }
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ROLE_TITLE {
+  ATHLETE
+  ADMIN
+}
+
+enum GENDER {
+  Male
+  Female
+}
+
+enum WEIGHT {
+  KG
+  LBS
+}
+
+enum DISTANCE {
+  Meters
+  Miles
+}
+
+enum LANGUAGE {
+  English
+  German
+}
+
+enum WORKOUT_CATEGORY {
+  Strength
+  Cardio
+  Gym
+}
+
+enum POST_CATEGORY {
+  Hybrid
+  General
+  Nutrition
+  Running
+  OtherSports
+}
+
+enum NotificationType {
+  NO
+}
+
+enum INJURY_TYPE {
+  Back
+  Shoulder
+  Knee
+  Hip
+  Ankle
+  AchillesTendon
+}
+
+enum MUSCLE_GROUP {
+  UpperBodyChest
+  UpperBodyBackRhomboids
+  UpperBodyBackLats
+  UpperBodyShoulder
+  UpperBodyBiceps
+  UpperBodyTriceps
+  UpperBodyForearms
+  UpperBodyCore
+  LowerBodyLowerBack
+  LowerBodyQuadriceps
+  LowerBodyHamstring
+  LowerBodyCalves
+  LowerBodyGlutes
+}
+
+enum EXERCISE_TYPE {
+  Complex
+  Simple
+  Accessory
+}
+
+enum UNIT {
+  Time
+  Reps
+  Rounds
+  DistanceMeters
+  DistanceKiloMeters
+}
+
+enum GROUP_TYPE {
+  Group
+  DirectMessage
+  Support
+}
+
+enum NOTIFICATION_TYPE {
+  Message
+  Challenge
+  Post
+  PlanBought
+}
+
+enum GYM_SESSION {
+  Morning
+  Evening
+}
+
+enum DAY {
+  Monday
+  Tuesday
+  Wednesday
+  Thursday
+  Friday
+  Saturday
+  Sunday
+}
+
+enum RACE_DAY {
+  Friday
+  Saturday
+  Sunday
+}
+
+enum MONTH {
+  Jan
+  Feb
+  Mar
+  Apr
+  May
+  Jun
+  Jul
+  Aug
+  Sep
+  Oct
+  Nov
+  Dec
+}
+
+enum BENCHMARKS {
+  NoBenchmark
+  RPE
+  RIR
+  OneRM
+  ThreeRM
+  StandardWorkoutWeightSixEightReps
+  StandardWorkoutWeightTenTwelveReps
+  StandardWorkoutWeightThirteenFifteenReps
+  RaceWeight
+  BodyWeightNoWeight
+  RunningRacePace
+  FivekPB
+  TenkPB
+  HalfMarathon
+  Marathon
+  NoseBreathing
+  HRR
+  MaxHR
+  RestHR
+  FTP
+  WattKg
+  TwokBest
+  FivekBest
+  ErgsRacePace
+  AssBikeWatt
+  AssBikekCal
+  MinHundredM
+  Watt
+  kCal
+  SPM
+  Vo2Max
+}
+
+enum BENCHMARK_UNIT {
+  kg
+  lbs
+  bpm
+  minKm
+  mmSs
+  hhMmSs
+  min500m
+  min100m
+  kcal
+  spm
+  watt
+  wattKg
+  mlKmMin
+}
+
+enum INTENSITY {
+  High
+  Medium
+  Low
+}
+
+enum Plan_Status {
+  Active
+  Inactive
+}
+
+enum WORKOUT_TYPE {
+  WarmUpIntervals
+  WarmUpStrengthUpperBody
+  WarmUpStrengthLowerBody
+  WarmUpErgs
+  WarmUpBike
+  WarmUpRaceSimulation
+  WarmUpGeneral
+  CoolDownRunning
+  CoolDownGym
+  CoolDownGeneral
+  StrengthFullBody
+  StrengthUpperBody
+  StrengthLowerBody
+  CardioBike
+  CardioMixedErgSession
+  CardioSkiErg
+  CardioRow
+  CardioAssBike
+  CardioIntervalRun
+  CardioThresholdRun
+  CardioSpeedRun
+  CardioLongRun
+  CardioTempoRun
+  CardioSwim
+  CardioLongCardioSession
+  WoDDuration
+  WoDFullBody
+  WoDUpperBody
+  WoDLowerBody
+  WoDMixed
+  HyroxHybrid
+  FinisherUpper
+  FinisherLower
+  RaceSimulation
+  Tapering
+  HolidayWorkout
+}
+
+enum RACE_RULE_TYPE {
+  Race
+  RaceSimulation
+}
+
+enum PERIOD_RULE_DAYS {
+  OneDayBefore
+  TwoDayBefore
+  PeriodDay
+  OneDayAfter
+  TwoDayAfter
+  ThreeDayAfter
+  FourDayAfter
+  FiveDayAfter
+}
+
+enum BREAK_RULE_DAYS {
+  HalfDayBefore
+  OneDayBefore
+  OneHalfDayBefore
+  TwoDayBefore
+  HalfDayAfter
+  OneDayAfter
+  OneHalfDayAfter
+  TwoDayAfter
+}
+
+enum IF_CLAUSE_LOW_INTENSITY {
+  WarmUpIntervals
+  WarmUpStrengthUpperBody
+  WarmUpStrengthLowerBody
+  WarmUpErgs
+  WarmUpBike
+  WarmUpRaceSimulation
+  WarmUpGeneral
+  CoolDownRunning
+  CoolDownGym
+  CoolDownGeneral
+  StrengthFullBody
+  StrengthUpperBody
+  StrengthLowerBody
+  CardioBike
+  CardioMixedErgSession
+  CardioSkiErg
+  CardioRow
+  CardioAssBike
+  CardioIntervalRun
+  CardioThresholdRun
+  CardioSpeedRun
+  CardioLongRun
+  CardioTempoRun
+  CardioSwim
+  CardioLongCardioSession
+  WoDDuration
+  WoDFullBody
+  WoDUpperBody
+  WoDLowerBody
+  WoDMixed
+  HyroxHybrid
+  FinisherUpper
+  FinisherLower
+  RaceSimulation
+  Tapering
+  HolidayWorkout
+  LowIntensityWorkout
+  RestDay
+}
+
+enum THEN_CLAUSE_LOW_INTENSITY {
+  LowIntensityWorkout
+  RestDay
+}
+
+enum WORKOUT_TYPE_DAYS {
+  OneDay
+  TwoDay
+  ThreeDay
+  FourDay
+  FiveDay
+  SixDay
+  SevenDay
+}
+
+enum MACHINE_TYPE {
+  Row
+  WallBalls
+  SledPush
+  SledPull
+  SkiErg
+  TreadMill
+  TrainingOutside
+  Bike
+  AssBike
+  CrossTrainer
+  StairMaster
+  JumpRope
+}
+
+enum WORKOUT_COMBINATION_STATUS {
+  Mandatory
+  Optional
+}
+
+enum WORKOUT_COMBINATION_BEFORE_AFTER {
+  Before
+  After
+}
+
+enum DURATION_DISCOUNT {
+  One
+  Two
+  Three
+  Four
+  Five
+  Six
+  Seven
+  Eight
+  Nine
+  Ten
+  Eleven
+  Twelve
+  Unlimited
+}
+
+enum SUBSCRIPTION_TYPE {
+  Stripe
+  Paypal
+}
+
+enum ACTIVITY {
+  Running
+  Row
+  Swim
+  Bike
+  SkiErg
+  Calories
+}
+
+enum WATCH_PROVIDERS {
+  Polar
+  Fitbit
+  Garmin
+  Apple
+  Whoop
+}
+
+model Role {
+  id        String     @id @default(cuid())
+  title     ROLE_TITLE @unique
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  user User[]
+}
+
+model User {
+  id             String  @id @default(cuid())
+  firstName      String?
+  lastName       String?
+  fullName       String?
+  email          String  @unique
+  isVerified     Boolean @default(false)
+  profilePicture String?
+  billingEmail   String?
+  deleted        Boolean @default(false)
+
+  emailChange Boolean @default(false)
+  newEmail    String?
+
+  createdAt DateTime  @default(now())
+  deletedAt DateTime?
+  updatedAt DateTime  @updatedAt
+
+  lastActivity DateTime?
+
+  onBoardingComplete Boolean @default(false)
+
+  // TODO: remove these as will need to create separate schema
+  plan          String?
+  status        String?
+  paymentStatus String?
+
+  // TODO: New fields for admin. adjust where applicable
+  dateOfBirth DateTime?
+  phone       String?
+  address     String?
+  city        String?
+  country     String?
+  postalCode  String?
+  // TODO: New fields for admin. adjust where applicable
+
+  paypalSubscriptionPlanId String?
+  stripeCoupon             String?
+
+  deactivated      Boolean   @default(false)
+  deactivationDate DateTime?
+
+  roleId String
+  role   Role   @relation(fields: [roleId], references: [id])
+
+  password        Password?
+  blocked         Block?
+  preferences     Preferences?
+  injury          Injury?
+  workoutSettings WorkoutSetting?
+  stripe          Stripe?
+  cancelledPlan   CancelledPlan?
+
+  menstrualCycles MenstrualCycle[]
+  deviceTokens    DeviceToken[]
+  userChallenges  UserChallenges[]
+  userGroups      UserGroups[]
+
+  createdChats Chat[]
+
+  createdGroups     Group[] @relation("Creator")
+  participantGroups Group[] @relation("Participant")
+
+  chatReadBy                  ChatReadBy[]
+  notifications               Notification[]                 @relation("Receiver")
+  sentNotifications           Notification[]                 @relation("Sender")
+  benchmarks                  UserBenchmark[]
+  plans                       UserPlan[]
+  sessionFeedback             FeedbackPlanSchedule[]
+  gymSessionWorkoutBenchmarks UserBenchmarkScheduleWorkout[]
+  payments                    Payment[]
+  userGeneralBenchmark        UserGeneralBenchmark[]
+  excludedAthletesWorkout     ExcludedAthletesWorkout[]
+  athleteDiscountPlan         AthleteDiscountPlan[]
+  subscription                Subscription[]
+  healthData                  HealthData[]
+
+  @@unique([email, deleted])
+}
+
+model Stripe {
+  id String @id @default(cuid())
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  stripeCustomerId String   @unique
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Subscription {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  stripeSubscriptionId String?
+  agreementId          String?
+
+  current Boolean @default(true)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  type SUBSCRIPTION_TYPE
+
+  planId String
+  plan   Plan   @relation(fields: [planId], references: [id], onDelete: Cascade)
+}
+
+model CancelledPlan {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  planId String @unique
+  plan   Plan   @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  date DateTime
+
+  removed Boolean @default(false)
+}
+
+model Payment {
+  id String @id @default(cuid())
+
+  amount Float
+
+  planType String
+
+  paymentMethod SUBSCRIPTION_TYPE?
+
+  subscription Boolean @default(false)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  planId String
+  plan   Plan   @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  discountId String?
+  discount   PlanDiscount? @relation(fields: [discountId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Password {
+  id       String  @id @default(cuid())
+  password String? //Password is not required for SSO USERS  
+  socialId String? //User Id provided by sso platform 
+  attempt  Int     @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Block {
+  id        String    @id @default(cuid())
+  deleteOn  DateTime?
+  permanent Boolean   @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Preferences {
+  id             String   @id @default(cuid())
+  gender         GENDER   @default(Male)
+  weight         WEIGHT   @default(KG)
+  distance       DISTANCE @default(Meters)
+  language       LANGUAGE @default(English)
+  useCalendar    Boolean  @default(false)
+  periodDuration Int?
+  cycleDuration  Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  menstrualCycle MenstrualCycle[]
+}
+
+model MenstrualCycle {
+  id   String   @id @default(cuid())
+  date DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  preferenceId String
+  preference   Preferences @relation(fields: [preferenceId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, date])
+}
+
+model WorkoutSetting {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  raceDay           DateTime?
+  raceDaySimulation DateTime?
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  weekDaySettings WeekDaySetting[]
+}
+
+model WeekDaySetting {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  day                DAY
+  session            GYM_SESSION
+  morningTime        String?
+  morningTimeSeconds Int?
+  eveningTime        String?
+  eveningTimeSeconds Int?
+
+  holidayMode Boolean @default(false)
+
+  row             Boolean?
+  wallBalls       Boolean?
+  sledPush        Boolean?
+  sledPull        Boolean?
+  skiErg          Boolean?
+  treadMill       Boolean?
+  trainingOutside Boolean?
+  bike            Boolean?
+  assBike         Boolean?
+  crossTrainer    Boolean?
+  stairMaster     Boolean?
+  jumpRope        Boolean?
+
+  workoutSettingId String
+  workoutSetting   WorkoutSetting @relation(fields: [workoutSettingId], references: [id], onDelete: Cascade)
+
+  WeekDayExercises WeekDayExercises[]
+}
+
+model WeekDayExercises {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  exerciseId String
+  exercise   Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+
+  weekDaySettingId String
+  weekDaySetting   WeekDaySetting @relation(fields: [weekDaySettingId], references: [id], onDelete: Cascade)
+}
+
+model Injury {
+  id             String  @id @default(cuid())
+  back           Boolean @default(false)
+  shoulder       Boolean @default(false)
+  knee           Boolean @default(false)
+  hip            Boolean @default(false)
+  ankle          Boolean @default(false)
+  achillesTendon Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Post {
+  id           String        @id @default(cuid())
+  title        String
+  category     POST_CATEGORY
+  description  String
+  imageUrl     String
+  videoUrl     String?
+  externalLink String?
+  isPublished  Boolean       @default(true)
+
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  notifications Notification[]
+
+  @@index([category])
+}
+
+model Challenge {
+  id                 String           @id @default(cuid())
+  name               String           @unique
+  category           WORKOUT_CATEGORY
+  videoUrl           String?
+  startTime          DateTime
+  endTime            DateTime
+  winnerAnnounceDate DateTime
+  unit               UNIT
+  description        String
+  isPublished        Boolean          @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userChallenges UserChallenges[]
+  notifications  Notification[]
+}
+
+model UserChallenges {
+  id   String  @id @default(cuid())
+  time String?
+
+  score Float //This is the score that user submits on registering a score in challenge
+
+  videoUrl String?
+  imageUrl String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  challengeId String
+  challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, challengeId])
+  @@index([userId, challengeId])
+}
+
+model Exercise {
+  id          String           @id @default(cuid())
+  name        String
+  category    WORKOUT_CATEGORY
+  description String
+
+  exerciseType EXERCISE_TYPE
+
+  muscleGroup MUSCLE_GROUP?
+
+  relatedInjuries INJURY_TYPE[]
+
+  benchmarks BENCHMARKS[]
+
+  machineType MACHINE_TYPE?
+
+  imageUrl String?
+  videoUrl String?
+
+  createdAt                    DateTime                       @default(now())
+  updatedAt                    DateTime                       @updatedAt
+  partExercises                PartExercises[]
+  userBenchmarks               UserBenchmark[]
+  userBenchmarkScheduleWorkout UserBenchmarkScheduleWorkout[]
+
+  exerciseRules            AlternativeExerciseRules[] @relation("Exercise")
+  alternativeExerciseRules AlternativeExerciseRules[] @relation("AlternativeExercise")
+  WeekDayExercises         WeekDayExercises[]
+
+  @@unique([name])
+}
+
+model UserGeneralBenchmark {
+  id String @id @default(cuid())
+
+  value String
+
+  unit String
+
+  type String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  userBenchmarkHistory UserBenchmarkHistory[]
+
+  @@unique([userId, type, unit])
+  @@index([userId])
+}
+
+model UserBenchmark {
+  id String @id @default(cuid())
+
+  value String
+
+  unit BENCHMARK_UNIT?
+
+  type BENCHMARKS
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  exerciseId String
+  exercise   Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  userBenchmarkHistory UserBenchmarkHistory[]
+
+  @@unique([exerciseId, userId, type, unit])
+  @@index([exerciseId, userId])
+}
+
+model UserBenchmarkHistory {
+  id String @id @default(cuid())
+
+  value String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userBenchmarkId String?
+  userBenchmark   UserBenchmark? @relation(fields: [userBenchmarkId], references: [id], onDelete: Cascade)
+
+  userGeneralBenchmarkId String?
+  userGeneralBenchmark   UserGeneralBenchmark? @relation(fields: [userGeneralBenchmarkId], references: [id])
+}
+
+model Group {
+  id   String  @id @default(cuid())
+  name String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  type GROUP_TYPE
+
+  userId    String
+  createdBy User   @relation("Creator", fields: [userId], references: [id], onDelete: Cascade)
+
+  participantId String?
+  participant   User?   @relation("Participant", fields: [participantId], references: [id], onDelete: Cascade)
+
+  userGroups UserGroups[]
+
+  chat          Chat[]
+  notifications Notification[]
+
+  request Boolean @default(false)
+
+  @@index([userId, participantId, type])
+}
+
+model UserGroups {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId  String
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  groupId String
+  group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  read Boolean @default(true)
+
+  @@unique([groupId, userId])
+  @@index([groupId, userId])
+}
+
+model Chat {
+  id      String @id @default(cuid())
+  message String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  updated Boolean @default(false)
+
+  senderId String
+
+  sender User @relation(fields: [senderId], references: [id], onDelete: Cascade)
+
+  group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  groupId String
+
+  chatReadBy ChatReadBy[]
+
+  @@index([groupId, senderId])
+}
+
+model ChatReadBy {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chatId String
+  chat   Chat   @relation(fields: [chatId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, chatId])
+  @@index([userId, chatId])
+}
+
+model RaceRules {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  raceDay    RACE_DAY
+  weekDay    DAY
+  gymSession GYM_SESSION
+  type       RACE_RULE_TYPE
+
+  planId String
+  plan   Plan   @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  workoutId String?
+  workout   Workout? @relation(fields: [workoutId], references: [id], onDelete: Cascade)
+
+  @@unique([raceDay, weekDay, gymSession, type, planId])
+}
+
+model RestDayRules {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  days Int
+
+  planId String @unique
+  plan   Plan   @relation(fields: [planId], references: [id], onDelete: Cascade)
+}
+
+model PeriodDayRules {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  daysBefore Int
+  daysAfter  Int
+
+  planId String @unique
+  plan   Plan   @relation(fields: [planId], references: [id], onDelete: Cascade)
+}
+
+model PeriodRules {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  gymSession GYM_SESSION
+  day        PERIOD_RULE_DAYS
+
+  planId String
+  plan   Plan   @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  workoutId String?
+  workout   Workout? @relation(fields: [workoutId], references: [id], onDelete: Cascade)
+
+  @@unique([gymSession, day, planId])
+}
+
+model PeriodMaxWorkouts {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  maxPerWeek  Int
+  workoutType WORKOUT_TYPE
+
+  planId String
+  plan   Plan   @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  @@unique([maxPerWeek, workoutType, planId])
+}
+
+model BreakRules {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  day                  BREAK_RULE_DAYS
+  selectedWorkoutTypes WORKOUT_TYPE[]
+  workoutType          WORKOUT_TYPE
+
+  planId String
+  plan   Plan   @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  @@unique([planId, workoutType, day])
+}
+
+model LowIntensityWorkoutTypes {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  lowIntensityWorkoutTypes  WORKOUT_TYPE[]
+  highIntensityWorkoutTypes WORKOUT_TYPE[]
+
+  planId String @unique
+  plan   Plan   @relation(fields: [planId], references: [id], onDelete: Cascade)
+}
+
+model AlternativeExerciseRules {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  fieldOne String?
+  fieldTwo String?
+
+  benchmark BENCHMARKS
+  intensity String
+
+  // original exercise
+  exerciseId String
+  exercise   Exercise @relation("Exercise", fields: [exerciseId], references: [id], onDelete: Cascade)
+
+  // exercise to replace original exercises
+  alternativeExerciseId String
+  alternativeExercise   Exercise @relation("AlternativeExercise", fields: [alternativeExerciseId], references: [id], onDelete: Cascade)
+
+  planId String
+  plan   Plan   @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  @@unique([exerciseId, alternativeExerciseId, planId])
+}
+
+model WorkoutTypeRules {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  day WORKOUT_TYPE_DAYS
+
+  planId String
+  plan   Plan   @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  workoutPriorityOccurrence WorkoutPriorityOccurrence[]
+
+  @@unique([day, planId])
+}
+
+model WorkoutPriorityOccurrence {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  workoutType WORKOUT_TYPE
+
+  priority   Int
+  occurrence Int
+
+  workoutTypeRulesId String
+  workoutTypeRules   WorkoutTypeRules @relation(fields: [workoutTypeRulesId], references: [id], onDelete: Cascade)
+
+  @@unique([workoutType, workoutTypeRulesId])
+}
+
+model CombinationRules {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  notComeAlone WORKOUT_TYPE[]
+
+  planId String @unique
+  plan   Plan   @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  combinationRulesWorkoutTypes CombinationRulesWorkoutTypes[]
+}
+
+model CombinationRulesWorkoutTypes {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  workoutType WORKOUT_TYPE
+
+  combinationRulesId String
+  combinationRules   CombinationRules @relation(fields: [combinationRulesId], references: [id], onDelete: Cascade)
+
+  workoutTypesCombinations WorkoutTypesCombinations[]
+
+  @@unique([combinationRulesId, workoutType])
+}
+
+model WorkoutTypesCombinations {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  status     WORKOUT_COMBINATION_STATUS
+  allocation WORKOUT_COMBINATION_BEFORE_AFTER
+
+  priority Int
+
+  combinationWorkoutTypes WORKOUT_TYPE[]
+
+  combinationRulesWorkoutTypesId String
+  combinationRulesWorkoutTypes   CombinationRulesWorkoutTypes @relation(fields: [combinationRulesWorkoutTypesId], references: [id], onDelete: Cascade)
+
+  @@index([combinationRulesWorkoutTypesId])
+}
+
+model Plan {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  deletedAt DateTime?
+
+  userClone Boolean @default(false)
+
+  name        String
+  type        String
+  cost        Float
+  duration    Int?
+  description String?
+
+  status Plan_Status
+
+  planSuperSetId String?
+  planSuperSet   PlanSuperSet? @relation(fields: [planSuperSetId], references: [id], onDelete: Cascade)
+
+  restDayRules             RestDayRules?
+  periodDayRules           PeriodDayRules?
+  lowIntensityWorkoutTypes LowIntensityWorkoutTypes?
+  combinationRules         CombinationRules?
+  cancelledPlan            CancelledPlan?
+
+  planSchedule             PlanSchedule[]
+  userPlan                 UserPlan[]
+  discounts                PlanDiscount[]
+  userPayments             Payment[]
+  notifications            Notification[]
+  raceRules                RaceRules[]
+  periodRules              PeriodRules[]
+  periodMaxWorkouts        PeriodMaxWorkouts[]
+  BreakRules               BreakRules[]
+  alternativeExerciseRules AlternativeExerciseRules[]
+  workoutTypeRules         WorkoutTypeRules[]
+  athleteDiscountPlan      AthleteDiscountPlan[]
+  subscription             Subscription[]
+
+  @@index([name, type])
+}
+
+model PlanSuperSet {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  plans Plan[]
+}
+
+model PlanDiscount {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name       String
+  percentage Int
+  endTime    DateTime
+
+  duration DURATION_DISCOUNT?
+
+  limit Int?
+
+  status Plan_Status
+
+  used Boolean @default(false)
+
+  planId       String
+  plan         Plan       @relation(fields: [planId], references: [id], onDelete: Cascade)
+  userPlans    UserPlan[]
+  userPayments Payment[]
+
+  @@unique([name, planId])
+  @@index([planId, name])
+}
+
+model AthleteDiscountPlan {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  percentage Int
+  duration   DURATION_DISCOUNT
+
+  planId String
+  plan   Plan   @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([planId, userId])
+}
+
+model UserPlan {
+  id String @id @default(cuid())
+
+  current Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  planId String
+  plan   Plan   @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  planDiscountId String?
+  planDiscount   PlanDiscount? @relation(fields: [planDiscountId], references: [id], onDelete: Cascade)
+}
+
+model PlanSchedule {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  week       Int
+  year       Int?
+  month      MONTH?
+  gymSession GYM_SESSION
+  day        DAY
+
+  userClone Boolean @default(false)
+
+  planId String
+  plan   Plan   @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  scheduleWorkouts     ScheduleWorkout[]
+  feedbackPlanSchedule FeedbackPlanSchedule[]
+
+  @@unique([week, day, gymSession, planId])
+}
+
+model FeedbackPlanSchedule {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  imageUrl String?
+
+  answerOne String?
+  ratingOne Int
+
+  answerTwo String?
+  ratingTwo Int
+
+  answerThree String?
+  ratingThree Int
+
+  planScheduleId String
+  planSchedule   PlanSchedule @relation(fields: [planScheduleId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, planScheduleId])
+}
+
+model ScheduleWorkout {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  planScheduleId String
+  planSchedule   PlanSchedule @relation(fields: [planScheduleId], references: [id], onDelete: Cascade)
+
+  userClone Boolean @default(false)
+
+  sortOrder Int? @default(autoincrement())
+
+  workoutId String
+  workout   Workout @relation(fields: [workoutId], references: [id], onDelete: Cascade)
+
+  userBenchmarkSchduleWorkout UserBenchmarkScheduleWorkout[]
+
+  @@unique([planScheduleId, workoutId])
+}
+
+model UserBenchmarkScheduleWorkout {
+  id String @id @default(cuid())
+
+  value String
+
+  unit BENCHMARK_UNIT?
+
+  result String?
+
+  type BENCHMARKS
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  gymSessionDate DateTime?
+
+  scheduleWorkoutId String
+  scheduleWorkout   ScheduleWorkout @relation(fields: [scheduleWorkoutId], references: [id], onDelete: Cascade)
+
+  exerciseId String
+  exercise   Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  partExerciseId String?
+  partExercise   PartExercises? @relation(fields: [partExerciseId], references: [id], onDelete: Cascade)
+
+  // @@unique([scheduleWorkoutId, exerciseId, userId, type, unit, partExerciseId])
+  @@index([exerciseId, userId, scheduleWorkoutId])
+}
+
+model Workout {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  deletedAt DateTime?
+
+  name String
+
+  type WORKOUT_TYPE
+
+  generated Boolean @default(false)
+
+  duration String
+
+  durationSeconds Int?
+
+  frequency Int?
+
+  relatedInjuries INJURY_TYPE[]
+
+  injuries INJURY_TYPE[]
+
+  mediaUrl String?
+
+  holidayMode Boolean @default(false)
+
+  additionalWorkout Boolean @default(false)
+
+  // if this is an injury workout - relevant for manual workouts
+  injury Boolean @default(false)
+
+  userClone Boolean @default(false)
+
+  WorkoutParts    WorkoutParts[]
+  scheduleWorkout ScheduleWorkout[]
+
+  excludedAthletesWorkout ExcludedAthletesWorkout[]
+
+  workoutSuperSetId String?
+  workoutSuperSet   WorkoutSuperSet? @relation(fields: [workoutSuperSetId], references: [id], onDelete: Cascade)
+  raceRules         RaceRules[]
+  periodRules       PeriodRules[]
+
+  @@index([name])
+}
+
+model WorkoutSuperSet {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Workout Workout[]
+}
+
+model ExcludedAthletesWorkout {
+  id String @id @default(cuid())
+
+  workoutId String
+  workout   Workout @relation(fields: [workoutId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([workoutId, userId])
+}
+
+model WorkoutParts {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name String?
+
+  position Int
+
+  workoutId String
+  workout   Workout @relation(fields: [workoutId], references: [id], onDelete: Cascade)
+
+  userClone Boolean @default(false)
+
+  comments           Comment[]
+  breaks             Break[]
+  partExercises      PartExercises[]
+  generatedExercises GeneratedExercises[]
+
+  @@index([name])
+}
+
+model Comment {
+  id       String @id @default(cuid())
+  comment  String
+  position Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userClone Boolean @default(false)
+
+  WorkoutParts   WorkoutParts? @relation(fields: [workoutPartsId], references: [id], onDelete: Cascade)
+  workoutPartsId String?
+}
+
+model Break {
+  id       String @id @default(cuid())
+  break    String
+  position Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userClone Boolean @default(false)
+
+  WorkoutParts   WorkoutParts? @relation(fields: [workoutPartsId], references: [id], onDelete: Cascade)
+  workoutPartsId String?
+}
+
+model PartExercises {
+  id        String     @id @default(cuid())
+  benchmark BENCHMARKS
+  intensity String?
+  variance  String?
+
+  position Int
+
+  fieldOne String?
+  fieldTwo String?
+
+  reps String?
+  sets String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userClone Boolean @default(false)
+
+  partId String
+  part   WorkoutParts @relation(fields: [partId], references: [id], onDelete: Cascade)
+
+  exerciseId                   String
+  exercise                     Exercise                       @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  userBenchmarkScheduleWorkout UserBenchmarkScheduleWorkout[]
+}
+
+model GeneratedExercises {
+  id        String     @id @default(cuid())
+  benchmark BENCHMARKS
+  intensity String?
+  variance  String?
+  position  Int
+
+  fieldOne String?
+  fieldTwo String?
+
+  reps String?
+  sets String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userClone Boolean @default(false)
+
+  partId String
+  part   WorkoutParts @relation(fields: [partId], references: [id], onDelete: Cascade)
+
+  exerciseType EXERCISE_TYPE
+
+  muscleGroup MUSCLE_GROUP
+}
+
+// model Image {
+//   id         String  @id @default(cuid())
+//   url        String
+//   isAttached Boolean @default(false)
+
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+
+//   exerciseId String?   @unique
+//   exercise   Exercise? @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+// }
+
+// model Video {
+//   id         String  @id @default(cuid())
+//   url        String
+//   isAttached Boolean @default(false)
+
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+
+//   exerciseId String?   @unique
+//   exercise   Exercise? @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+// }
+
+model DeviceToken {
+  id          String @id @default(cuid())
+  deviceToken String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Notification {
+  id    String            @id @default(cuid())
+  title String?
+  body  String
+  type  NOTIFICATION_TYPE
+  read  Boolean           @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String
+  user   User   @relation("Receiver", fields: [userId], references: [id], onDelete: Cascade)
+
+  senderId String?
+  sender   User?   @relation("Sender", fields: [senderId], references: [id], onDelete: Cascade)
+
+  postId String?
+  post   Post?   @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  challengeId String?
+  challenge   Challenge? @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+
+  groupId String?
+  group   Group?  @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  planId String?
+  plan   Plan?   @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model HealthData {
+  id String @id @default(cuid())
+
+  activity ACTIVITY
+  provider WATCH_PROVIDERS
+
+  distance Float?
+  calories Float?
+  duration Float? //this will be in seconds
+
+  startDate DateTime?
+  endDate   DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, startDate, provider, activity])
+}
+
+// model DeletedAccounts {
+//   id       String @id @default(cuid())
+//   count    Int
+//   accounts Json
+
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }

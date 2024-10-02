@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Break" ALTER COLUMN "break" SET DATA TYPE TEXT;

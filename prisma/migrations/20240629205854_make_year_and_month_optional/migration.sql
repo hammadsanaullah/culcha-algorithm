@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "PlanSchedule" ALTER COLUMN "year" DROP NOT NULL,
+ALTER COLUMN "month" DROP NOT NULL;
